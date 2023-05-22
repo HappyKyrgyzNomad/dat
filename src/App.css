@@ -8,9 +8,9 @@ input {
   width: 500px;
   height: 80px;
   border-radius: 15px;
-
-  border: none;
-  color: #ffffff;
+  /* background-color: #ffffff; */
+  border-color: #b5b5b5;
+  /* color: #000000; */
 }
 .app-btn {
   height: 80px;
