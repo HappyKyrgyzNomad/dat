@@ -88,7 +88,7 @@ function TextEditor() {
   return (
     <div style={{ alignItems: "flex-start" }}>
       <App content={content} />
-      <h4 style={{ textAlign: "left", color: "black" }}>Body</h4>
+      <h4 style={{ textAlign: "left" }}>Body</h4>
       <div style={{ display: "grid", justifyContent: "start" }}>
         <ReactQuill
           theme="snow"

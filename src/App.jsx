@@ -23,20 +23,28 @@ function App({ content }) {
   // Направления
   const origin = countries.map((country) => country.name);
   const dest = countries.map((country) => country.name);
+
+  const [defaultValue, setDefaultValue] = useState("");
+  function handleDefault() {
+    setDefaultValue(`Load from ${origin} to ${dest}`);
+  }
+
   // Тема письма для превью
   const [subject, setSubject] = useState("");
 
   return (
     <div className="app">
       <div>
-        <h4 style={{ textAlign: "left" }}>Subject</h4>
+        <h4>Subject</h4>
         <input
+          className="app-input"
+          placeholder="type..."
           onChange={(e) => setSubject(e.target.value)}
           type="text"
-          defaultValue={` From United States ${origin}`}
+          defaultValue={defaultValue}
         />
 
-        <button type="submit" className="app-btn">
+        <button onClick={handleDefault} className="app-btn">
           default values
         </button>
       </div>
