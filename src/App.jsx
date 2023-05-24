@@ -1,11 +1,11 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
+
 import Preview from "./Preview";
 
 function App({
   content,
-  toDefaultValues,
+
   subjectParent,
   setSubjectParent,
   origin,
