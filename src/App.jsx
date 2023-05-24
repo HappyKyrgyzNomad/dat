@@ -12,7 +12,7 @@ function App({
   dest,
 }) {
   // Тема письма для превью
-  const [subject, setSubject] = useState();
+  const [subject, setSubject] = useState("");
 
   const handleEditorChangeSubject = (e) => {
     setSubjectParent(e);
@@ -21,20 +21,6 @@ function App({
 
   return (
     <div className="app">
-      <div>
-        <h4>Subject</h4>
-        <input
-          className="app-input"
-          placeholder="type..."
-          onChange={(e) => handleEditorChangeSubject(e.target.value)}
-          type="text"
-          value={subjectParent}
-        />
-
-        <button onClick={toDefaultValues} className="app-btn">
-          default values
-        </button>
-      </div>
       <Preview
         content={content}
         origin={origin}

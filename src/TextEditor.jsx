@@ -124,30 +124,69 @@ function TextEditor() {
     localStorage.removeItem("defaultTextSubject");
   };
 
+  const handleEditorChangeSubject = (e) => {
+    setSubjectParent(e);
+    localStorage.setItem("defaultTextSubject", e);
+  };
   return (
-    <div style={{ alignItems: "flex-start" }}>
-      <App
-        subjectParent={subjectParent}
-        toDefaultValues={toDefaultValues}
-        content={content}
-        setSubjectParent={setSubjectParent}
-        origin={origin}
-        dest={dest}
-      />
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        columnGap: "30px",
+      }}
+    >
+      <div>
+        <div>
+          <h4>Subject</h4>
+          <input
+            style={{ padding: "10px" }}
+            className="app-input"
+            placeholder="type..."
+            onChange={(e) => handleEditorChangeSubject(e.target.value)}
+            type="text"
+            value={subjectParent}
+          />
 
-      <button onClick={templateTextSave}>save</button>
+          <button onClick={toDefaultValues} className="app-btn">
+            default values
+          </button>
+        </div>
+        <h4 style={{ textAlign: "left" }}>Body</h4>
 
-      <h4 style={{ textAlign: "left" }}>Body</h4>
-
-      <div style={{ display: "grid", justifyContent: "start" }}>
-        <ReactQuill
-          theme="snow"
-          modules={modules}
-          formats={formats}
-          value={content}
-          onChange={handleEditorChange}
-          style={{ height: "220px" }}
-        ></ReactQuill>{" "}
+        <div style={{ display: "grid", justifyContent: "start" }}>
+          <ReactQuill
+            theme="snow"
+            modules={modules}
+            formats={formats}
+            value={content}
+            onChange={handleEditorChange}
+            style={{ height: "220px", width: "700px" }}
+          ></ReactQuill>{" "}
+        </div>
+      </div>
+      <div style={{ position: "relative" }}>
+        {" "}
+        <App
+          subjectParent={subjectParent}
+          toDefaultValues={toDefaultValues}
+          content={content}
+          setSubjectParent={setSubjectParent}
+          origin={origin}
+          dest={dest}
+        />
+        <button
+          style={{
+            position: "fixed",
+            bottom: "50px",
+            right: "200px",
+            backgroundColor: "#3b81f6",
+            color: "#fff",
+          }}
+          onClick={templateTextSave}
+        >
+          save
+        </button>
       </div>
     </div>
   );

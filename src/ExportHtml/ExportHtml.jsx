@@ -9,7 +9,20 @@ function ExportHtml({ exportHtmlData }) {
     saveAs(blob, "exported.html");
   };
 
-  return <button onClick={handleExportClick}>Export as HTML</button>;
+  return (
+    <button
+      style={{
+        position: "fixed",
+        bottom: "50px",
+        right: "280px",
+        backgroundColor: "#3b81f6",
+        color: "#fff",
+      }}
+      onClick={handleExportClick}
+    >
+      Export as HTML
+    </button>
+  );
 }
 
 export default ExportHtml;

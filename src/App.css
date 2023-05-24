@@ -1,12 +1,7 @@
-.app {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 40px;
-}
 input {
   outline-color: rgb(49, 66, 245);
-  width: 500px;
-  height: 80px;
+  width: 490px;
+  height: 70px;
   border-radius: 15px;
   /* background-color: #ffffff; */
   border-color: #b5b5b5;

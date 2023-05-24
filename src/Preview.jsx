@@ -14,9 +14,19 @@ function Preview({ dest, origin, content, subject, subjectParent }) {
       <h1>Receiver will get</h1>
       <h4 style={{ textAlign: "left" }}>Subject:</h4>
       <p style={{ fontWeight: "bold" }}>{subjectParent}</p>
-
       <h4>Body: </h4>
-      <ReactMarkdown remarkPlugins={[rehypeParse]}>{content}</ReactMarkdown>
+      <div
+        style={{
+          maxWidth: "520px",
+          maxHeight: "265px",
+          overflowX: "hidden",
+          overflowY: "auto",
+        }}
+      >
+        {" "}
+        <ReactMarkdown remarkPlugins={[rehypeParse]}>{content}</ReactMarkdown>
+      </div>
+
       <ExportHtml exportHtmlData={exportHtmlData} />
     </div>
   );
