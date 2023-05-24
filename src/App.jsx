@@ -3,34 +3,21 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Preview from "./Preview";
 
-function App({ content }) {
-  // Бек
-  const supabase = createClient(
-    "https://hlsgdhbzyjqlpaudruoo.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsc2dkaGJ6eWpxbHBhdWRydW9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ1OTQyODgsImV4cCI6MjAwMDE3MDI4OH0.eUNFmkd8HDTPz2adX_AwTQ03ou40cqoEGX-HlWA0ZYY"
-  );
-
-  const [countries, setCountries] = useState([]);
-
-  useEffect(() => {
-    getCountries();
-  }, []);
-
-  async function getCountries() {
-    const { data } = await supabase.from("countries").select();
-    setCountries(data);
-  }
-  // Направления
-  const origin = countries.map((country) => country.name);
-  const dest = countries.map((country) => country.name);
-
-  const [defaultValue, setDefaultValue] = useState("");
-  function handleDefault() {
-    setDefaultValue(`Load from ${origin} to ${dest}`);
-  }
-
+function App({
+  content,
+  toDefaultValues,
+  subjectParent,
+  setSubjectParent,
+  origin,
+  dest,
+}) {
   // Тема письма для превью
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState();
+
+  const handleEditorChangeSubject = (e) => {
+    setSubjectParent(e);
+    localStorage.setItem("defaultTextSubject", e);
+  };
 
   return (
     <div className="app">
@@ -39,12 +26,12 @@ function App({ content }) {
         <input
           className="app-input"
           placeholder="type..."
-          onChange={(e) => setSubject(e.target.value)}
+          onChange={(e) => handleEditorChangeSubject(e.target.value)}
           type="text"
-          defaultValue={defaultValue}
+          value={subjectParent}
         />
 
-        <button onClick={handleDefault} className="app-btn">
+        <button onClick={toDefaultValues} className="app-btn">
           default values
         </button>
       </div>
@@ -53,6 +40,8 @@ function App({ content }) {
         origin={origin}
         dest={dest}
         subject={subject}
+        subjectParent={subjectParent}
+        setSubject={setSubject}
       />
     </div>
   );

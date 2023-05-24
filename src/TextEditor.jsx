@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import App from "./App";
+import { createClient } from "@supabase/supabase-js";
 
 function TextEditor() {
+  // Бек
+  const supabase = createClient(
+    "https://hlsgdhbzyjqlpaudruoo.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhsc2dkaGJ6eWpxbHBhdWRydW9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQ1OTQyODgsImV4cCI6MjAwMDE3MDI4OH0.eUNFmkd8HDTPz2adX_AwTQ03ou40cqoEGX-HlWA0ZYY"
+  );
+
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  async function getCountries() {
+    const { data } = await supabase.from("countries").select();
+    setCountries(data);
+  }
+  // Направления
+  const origin = countries.map((country) => country.name);
+  const dest = countries.map((country) => country.name);
+
   // состояния для данных ввода
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(
+    localStorage.getItem("defaultText") || "это дефолт"
+  );
   const handleEditorChange = (newContent) => {
     setContent(newContent);
+    localStorage.setItem("defaultText", newContent);
   };
   //  quill модули
   const modules = {
@@ -84,20 +108,46 @@ function TextEditor() {
     "align",
     "size",
   ];
+  const [subjectParent, setSubjectParent] = useState(
+    localStorage.getItem("defaultTextSubject" || "")
+  );
+
+  const templateTextSave = () => {
+    window.alert("Succesfully saved");
+  };
+
+  const toDefaultValues = () => {
+    setContent("Это default");
+    setSubjectParent(`Load from ${origin} to ${dest}`);
+
+    localStorage.removeItem("defaultText");
+    localStorage.removeItem("defaultTextSubject");
+  };
 
   return (
     <div style={{ alignItems: "flex-start" }}>
-      <App content={content} />
+      <App
+        subjectParent={subjectParent}
+        toDefaultValues={toDefaultValues}
+        content={content}
+        setSubjectParent={setSubjectParent}
+        origin={origin}
+        dest={dest}
+      />
+
+      <button onClick={templateTextSave}>save</button>
+
       <h4 style={{ textAlign: "left" }}>Body</h4>
+
       <div style={{ display: "grid", justifyContent: "start" }}>
         <ReactQuill
           theme="snow"
           modules={modules}
           formats={formats}
-          placeholder="write your content ...."
+          value={content}
           onChange={handleEditorChange}
           style={{ height: "220px" }}
-        ></ReactQuill>
+        ></ReactQuill>{" "}
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import ExportHtml from "./ExportHtml/ExportHtml";
 import rehypeParse from "rehype-parse/lib";
 
-function Preview({ dest, origin, content, subject }) {
+function Preview({ dest, origin, content, subject, subjectParent }) {
   // Экспортируем HTML
   const exportHtmlData = {
     subject: subject,
@@ -13,7 +13,8 @@ function Preview({ dest, origin, content, subject }) {
     <div>
       <h1>Receiver will get</h1>
       <h4 style={{ textAlign: "left" }}>Subject:</h4>
-      <p>{subject}</p>
+      <p style={{ fontWeight: "bold" }}>{subjectParent}</p>
+
       <h4>Body: </h4>
       <ReactMarkdown remarkPlugins={[rehypeParse]}>{content}</ReactMarkdown>
       <ExportHtml exportHtmlData={exportHtmlData} />
