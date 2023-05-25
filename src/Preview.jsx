@@ -22,10 +22,8 @@ function Preview({ dest, origin, content, subject, subjectParent }) {
           overflowX: "hidden",
           overflowY: "auto",
         }}
-      >
-        {" "}
-        <ReactMarkdown remarkPlugins={[rehypeParse]}>{content}</ReactMarkdown>
-      </div>
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></div>
 
       <ExportHtml exportHtmlData={exportHtmlData} />
     </div>

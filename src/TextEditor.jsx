@@ -3,6 +3,8 @@ import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import App from "./App";
 import { createClient } from "@supabase/supabase-js";
+import AddTemplate from "./AddTemplate";
+import MyTemplates from "./assets/MyTemplates";
 
 function TextEditor() {
   // Бек
@@ -117,7 +119,9 @@ function TextEditor() {
   };
 
   const toDefaultValues = () => {
-    setContent("Это default");
+    setContent(
+      "Hello , team !  Can we got more info pls about the load by this ref number {{ref}} and what is the best rate ? MC : 00000 Dispatch Team at Carrierify Alex Daniel Number : +1234567890123"
+    );
     setSubjectParent(`Load from ${origin} to ${dest}`);
 
     localStorage.removeItem("defaultText");
@@ -128,6 +132,17 @@ function TextEditor() {
     setSubjectParent(e);
     localStorage.setItem("defaultTextSubject", e);
   };
+  const [addNewTemplate, setAddNewTemplate] = useState(false);
+  const handleAddNewTemplate = () => {
+    setAddNewTemplate(true);
+  };
+
+  const [showTemplates, setShowTemplates] = useState(false);
+  const toggleShowTemplates = () => {
+    setShowTemplates(!showTemplates);
+    setAddNewTemplate(true);
+  };
+
   return (
     <div
       style={{
@@ -164,6 +179,7 @@ function TextEditor() {
             style={{ height: "220px", width: "700px" }}
           ></ReactQuill>{" "}
         </div>
+        <div className="preview"></div>
       </div>
       <div style={{ position: "relative" }}>
         {" "}
@@ -187,6 +203,66 @@ function TextEditor() {
         >
           save
         </button>
+        <div>
+          {" "}
+          <button
+            style={{
+              position: "fixed",
+              bottom: "50px",
+              right: "450px",
+              backgroundColor: "#3b81f6",
+              color: "#fff",
+            }}
+            onClick={handleAddNewTemplate}
+          >
+            Add new template
+          </button>
+          {addNewTemplate && (
+            <AddTemplate
+              showTemplates={showTemplates}
+              setAddNewTemplate={setAddNewTemplate}
+              setContent={setContent}
+              toggleShowTemplates={toggleShowTemplates}
+              content={content}
+            />
+          )}
+        </div>
+      </div>
+      {/* <div>
+        {" "}
+        <button
+          style={{
+            position: "fixed",
+            bottom: "50px",
+            right: "1220px",
+            backgroundColor: "#3b81f6",
+            color: "#fff",
+          }}
+          onClick={toggleShowTemplates}
+        >
+          {showTemplates ? "hide my templates" : "show my templates"}
+        </button>
+        {showTemplates && (
+          <MyTemplates content={content} setContent={setContent} />
+        )}
+      </div> */}
+      <div>
+        {" "}
+        <button
+          style={{
+            position: "fixed",
+            bottom: "50px",
+            right: "1220px",
+            backgroundColor: "#3b81f6",
+            color: "#fff",
+          }}
+          onClick={toggleShowTemplates}
+        >
+          {showTemplates ? "hide my templates" : "show my templates"}
+        </button>
+        {showTemplates && (
+          <MyTemplates content={content} setContent={setContent} />
+        )}
       </div>
     </div>
   );

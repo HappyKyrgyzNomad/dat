@@ -12,3 +12,6 @@ input {
   background-color: #3b81f6;
   color: #fff;
 }
+.modal {
+  display: none;
+}

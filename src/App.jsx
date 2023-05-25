@@ -1,6 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-
+import AddTemplate from "./AddTemplate";
 import Preview from "./Preview";
 
 function App({
